@@ -19,7 +19,7 @@ function Hamburger(size, stuffing) {
   Food.call(this);
   this.stuffing = stuffing;
   this.size = size;
-  this.name = `${size} hamburger`;
+  this.name = `${size} hamburger with ${stuffing}`;
   switch (size) {
     case "small":
       this.price = Hamburger.SIZE_SMALL.price;
@@ -168,12 +168,14 @@ Order.prototype.removeFromOrder = function (dish) {
   }
   for (let i = 0; i < this.items.length; i++) {
     if (dish.name === this.items[i].name) {
-      this.items.splice(this.items.indexOf(i), 1);
+      this.items.splice(this.items.indexOf(this.items[i]), 1);
       this.totalCalories -= dish.calories;
       this.totalPrice -= dish.price;
+
       console.log(`${dish.name} was deleted`);
     }
   }
+
   this.getCurrentOrder();
 };
 Order.prototype.getCurrentOrder = function () {
@@ -207,9 +209,9 @@ let firstOrder = new Order(
 firstOrder.getCurrentOrder();
 firstOrder.addToOrder(new Hamburger("small", "potato"));
 firstOrder.addToOrder(new Drink("coffee"));
-firstOrder.removeFromOrder(new Drink("coffee"));
+firstOrder.removeFromOrder(new Hamburger("small", "salad"));
 firstOrder.payForOrder();
 firstOrder.addToOrder(new Drink("coffee"));
-firstOrder.removeFromOrder(new Drink("coffee"));
+firstOrder.removeFromOrder(new Drink("cola"));
 firstOrder.getPrice();
 firstOrder.getCalories();
